@@ -6,6 +6,7 @@
     <title>Add New Recipe</title>
 </head>
 <body>
+    <%- include('../partials/_navbar.ejs') %>
     <h1>Add New Recipe</h1>
     <form action="/recipes" method="POST">
         <label for="name">Recipe Name:</label>
@@ -14,10 +15,22 @@
         <label for="instructions">Instructions:</label>
         <textarea id="instructions" name="instructions"></textarea>
 
-        <label for="ingredients">Ingredients (comma-separated):</label>
-        <input type="text" id="ingredients" name="ingredients">
-
+        <h3>Select Ingredients:</h3>
+        <% ingredients.forEach(ingredient => { %>
+          <div>
+            <input type="checkbox" name="ingredients" value="<%= ingredient._id %>" id="ingredient-<%= ingredient._id %>">
+            <label for="ingredient-<%= ingredient._id %>"><%= ingredient.name %></label>
+          </div>
+        <% }) %>
+    
         <button type="submit">Add Recipe</button>
     </form>
+
+    <h2>Add New Ingredient</h2>
+  <form action="/ingredients" method="POST">
+    <label for="name">Ingredient Name:</label>
+    <input type="text" name="name" id="name" required>
+    <button type="submit">Add Ingredient</button>
+  </form>
 </body>
 </html>
