@@ -8,5 +8,15 @@
   <body>
     <%- include('../partials/_navbar.ejs') %>
     <h1>Welcome to My Recipes</h1>
+    <p><a href="/recipes/new">Add New Recipe</a></p>
+    <% if(recipes) { %>
+    <ul>
+      <% recipes.forEach(recipe => { %>
+        <li><a href="/recipes/<%= recipe._id %>"><%= recipe.name %></a></li> 
+      <% }); %>
+  </ul>
+  <% } else { %>
+    <p>You have not created any recipes yet.</p>
+  <% }; %>
   </body>
 </html>

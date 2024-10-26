@@ -3,6 +3,7 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const path = require('path');
 require('dotenv').config();
 require('./config/database');
 
@@ -40,14 +41,14 @@ app.use(addUserToViews);
 app.use('/auth', authController);
 app.use('/recipes', recipesController);
 app.use('/ingredients', ingredientsController);
-// Protected Routes
-app.use(isSignedIn);
 
 // Public Routes
 app.get('/', async (req, res) => {
   res.render('index.ejs');
 });
 
+// Protected Routes
+app.use(isSignedIn);
 
 app.get('/protected', async (req, res) => {
   if (req.session.user) {
