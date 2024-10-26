@@ -31,5 +31,23 @@ router.post('/' , async ( req , res) =>{
     }    
 });
 
+//show page route
+router.get('/:recipeId', async (req, res) => {
+    try {
+        const recipe = await Recipe.findById(req.params.recipeId).populate('ingredients');
+
+        if (!recipe || !recipe.owner.equals(req.user._id)) {
+            return res.status(404).redirect('/');
+        }
+
+        res.locals.recipe = recipe;
+        res.render('recipes/show.ejs');
+
+    } catch (error) {
+        console.log(error);
+        redirect('/')
+    }
+});
+
 
 module.exports = router;
