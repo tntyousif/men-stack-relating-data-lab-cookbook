@@ -61,6 +61,22 @@ router.get('/:recipeId/edit', async (req , res) => {
     }
 });
 
+//update
+router.put('/:recipeId', async (req, res) => {
+    try {
+        const currentRecipe = await Recipe.findById(req.params.recipeId);
+        if (currentRecipe.owner.equals(req.session.user._id)) {
+            await currentRecipe.updateOne(req.body);
+            res.redirect(`${req.params.recipeId}`);
+        } else {
+            res.send("You don't have permission to do that.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.redirect('/');
+    }
+});
+
 // delete 
 router.delete('/:recipeId', async(req, res) => {
     try{
