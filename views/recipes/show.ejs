@@ -21,9 +21,9 @@
         <h2>Instructions:</h2>
         <p><%= recipe.instructions || 'No instructions provided.' %></p>
     </div>
-        <form action="/recipes/<%=recipe._id%>?_method=DELETE" method="POST">
-            <button type="submit">Delete recipe<%= recipe.name %></button>
-        </form>
+    
+    <div class="actions">
+        <a href="/recipes/<%= recipe._id %>/edit">Edit Recipe</a>
         <a href="/recipes">Back to Recipes</a>
     </div>
 </body>

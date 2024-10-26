@@ -44,6 +44,23 @@ router.get('/:recipeId', async (req, res) => {
     }
 });
 
+//edit
+router.get('/:recipeId/edit', async (req , res) => {
+    try {
+        const recipe = await Recipe.findById(req.params.recipeId);
+        const ingredients = await Ingredient.find();
+        if (recipe.owner.equals(req.session.user._id)) {
+            res.render('recipes/edit.ejs', {recipe, ingredients});            
+        } else {
+            res.send('You are not allowed to edit this recipe');
+        }
+
+    } catch (error) {
+        console.log(error)
+        res.redirect('/');
+    }
+});
+
 // delete 
 router.delete('/:recipeId', async(req, res) => {
     try{
