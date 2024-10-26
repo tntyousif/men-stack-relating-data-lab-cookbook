@@ -1,0 +1,12 @@
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <%if (user){%>
+            <li><a href="/recipes"> view my recipes</a></li>
+            <li><a href="/auth/sign-out"> Sign out</a></li>
+        <%} else { %>
+            <li><a href="/auth/sign-up.ejs">Sign up</a></li>
+            <li><a href="/auth/sign-in.ejs">Sign in</a></li>
+        <% }%>
+    </ul>
+</nav>

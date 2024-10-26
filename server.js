@@ -3,13 +3,15 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const addUserToViews = require('./middleware/addUserToViews');
 require('dotenv').config();
 require('./config/database');
 
 // Controllers
 const authController = require('./controllers/auth');
+const recipesController = require('./controllers/recipes.js');
+const ingredientsController = require('./controllers/ingredients.js');
 const isSignedIn = require('./middleware/isSignedIn');
+const addUserToViews = require('./middleware/addUserToViews');
 
 const app = express();
 // Set the port from environment variable or default to 3000
@@ -35,16 +37,17 @@ app.use(
 );
 
 app.use(addUserToViews);
+app.use('/auth', authController);
+app.use('/recipes', recipesController);
+app.use('/ingredients', ingredientsController);
+// Protected Routes
+app.use(isSignedIn);
 
 // Public Routes
 app.get('/', async (req, res) => {
   res.render('index.ejs');
 });
 
-app.use('/auth', authController);
-
-// Protected Routes
-app.use(isSignedIn);
 
 app.get('/protected', async (req, res) => {
   if (req.session.user) {
