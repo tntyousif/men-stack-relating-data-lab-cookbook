@@ -1,3 +1,4 @@
+// modles/recipe.js
 const mongoose = require('mongoose');
 
 const recipeSchema = new mongoose.Schema({
@@ -14,7 +15,6 @@ const recipeSchema = new mongoose.Schema({
         ref: 'User',
         require: true,
     },
-    
     ingredients:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ingredient',

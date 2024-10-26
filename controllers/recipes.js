@@ -34,12 +34,7 @@ router.post('/' , async ( req , res) =>{
 //show page route
 router.get('/:recipeId', async (req, res) => {
     try {
-        const recipe = await Recipe.findById(req.params.recipeId).populate('ingredients');
-
-        if (!recipe || !recipe.owner.equals(req.user._id)) {
-            return res.status(404).redirect('/');
-        }
-
+        const recipe = await Recipe.findById(req.params.recipeId);
         res.locals.recipe = recipe;
         res.render('recipes/show.ejs');
 
@@ -49,5 +44,23 @@ router.get('/:recipeId', async (req, res) => {
     }
 });
 
+// delete 
+router.delete('/:recipeId', async(req, res) => {
+    try{
+        const recipe = await Recipe.findById(req.params.recipeId);
+        if(recipe.owner.equals(req.session.user._id)){
+          await Recipe.findByIdAndDelete(req.params.recipeId);
+          res.redirect("/recipes");
+        }
+        else {
+          res.send("You are not allowed to delete this recipe")
+        }
+       
+    } catch(error) {
+        console.log(error)
+        res.redirect('/')
+    }
+      
+});
 
 module.exports = router;
