@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= recipe.name %></title>
+</head>
+<body>
+    <h1><%= recipe.name %> by <%= recipe.owner.username%></h1>
+    
+    <div class="ingredients">
+        <h2>Ingredients:</h2>
+        <ul>
+            <% recipe.ingredients.forEach(ingredient => { %>
+                <li><%= ingredient.name %></li>
+            <% }); %>
+        </ul>
+    </div>
+    
+    <div class="instructions">
+        <h2>Instructions:</h2>
+        <p><%= recipe.instructions || 'No instructions provided.' %></p>
+    </div>
+        <a href="/recipes">Back to Recipes</a>
+    </div>
+</body>
+</html>
